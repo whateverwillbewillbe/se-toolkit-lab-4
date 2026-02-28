@@ -12,22 +12,49 @@ export default defineConfig(({ mode }) => {
         '/items': {
           target,
           changeOrigin: true,
+          secure: false,
+          configure: (proxy, _options) => {
+            proxy.on('proxyReq', (proxyReq, req, _res) => {
+              // Forward Authorization header
+              if (req.headers.authorization) {
+                proxyReq.setHeader('Authorization', req.headers.authorization)
+              }
+            })
+          },
         },
         '/learners': {
           target,
           changeOrigin: true,
+          secure: false,
+          configure: (proxy, _options) => {
+            proxy.on('proxyReq', (proxyReq, req, _res) => {
+              if (req.headers.authorization) {
+                proxyReq.setHeader('Authorization', req.headers.authorization)
+              }
+            })
+          },
         },
         '/interactions': {
           target,
           changeOrigin: true,
+          secure: false,
+          configure: (proxy, _options) => {
+            proxy.on('proxyReq', (proxyReq, req, _res) => {
+              if (req.headers.authorization) {
+                proxyReq.setHeader('Authorization', req.headers.authorization)
+              }
+            })
+          },
         },
         '/docs': {
           target,
           changeOrigin: true,
+          secure: false,
         },
         '/openapi.json': {
           target,
           changeOrigin: true,
+          secure: false,
         },
       },
     },
